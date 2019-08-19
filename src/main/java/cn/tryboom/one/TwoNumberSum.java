@@ -14,29 +14,29 @@ public class TwoNumberSum {
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         StringBuilder s1 = new StringBuilder();
         StringBuilder s2 = new StringBuilder();
-        while (l1!=null){
-            s1.append(String.valueOf(l1.val));
-            l1=l1.next;
+        while (l1 != null) {
+            s1.append(l1.val);
+            l1 = l1.next;
         }
-        while (l2!=null){
-            s2.append(String.valueOf(l2.val));
-            l2=l2.next;
+        while (l2 != null) {
+            s2.append(l2.val);
+            l2 = l2.next;
         }
         int sum = Integer.parseInt(s1.toString()) + Integer.parseInt(s2.toString());
         String s = String.valueOf(sum);
         //TODO 如何将此字符串转化为node
         System.out.println(s);
-        return new ListNode(s.charAt(s.length()-1));
+        return new ListNode(s.charAt(s.length() - 1));
     }
 
     public static void main(String[] args) {
-        ListNode l1=new ListNode(2);
+        ListNode l1 = new ListNode(2);
         l1.next = new ListNode(4);
-        l1.next.next=new ListNode(3);
+        l1.next.next = new ListNode(3);
 
-        ListNode l2=new ListNode(5);
+        ListNode l2 = new ListNode(5);
         l2.next = new ListNode(6);
-        l2.next.next=new ListNode(4);
+        l2.next.next = new ListNode(4);
         ListNode listNode = addTwoNumbers(l1, l2);
     }
 
@@ -46,14 +46,17 @@ public class TwoNumberSum {
 class ListNode {
     int val;
     ListNode next;
-    ListNode(int x) { val = x; }
+
+    ListNode(int x) {
+        val = x;
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder s2 = new StringBuilder();
-        while (this.next!=null){
-            s2.append(String.valueOf(val));
-            next=this.next.next;
+        while (this.next != null) {
+            s2.append(val);
+            next = this.next.next;
         }
         return s2.toString();
     }
