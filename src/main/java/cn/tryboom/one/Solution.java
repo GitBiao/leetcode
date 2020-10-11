@@ -1,10 +1,6 @@
 package cn.tryboom.one;
 
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  *         给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
  *
@@ -27,24 +23,18 @@ import java.util.stream.Collectors;
  */
 
 public class Solution {
-
     //两个数组取中位数，无非是将数组合并后排好序，取中间的数。
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        if(nums1 == null){
-            //考虑有一个数组为空的情况
-            return oneArrayMedian(nums2);
+        SeqList a = new SeqList(nums1);
+        SeqList b = new SeqList(nums2);
+        SeqList c = new SeqList(new int[a.array.length + b.array.length]);
+        Combine cob=new Combine();
+        cob.Combine(a, b, c);
+        for (int i=0;i<c.array.length ;i++){
+            System.out.println(c.array[i]);
         }
-        if(nums2 == null){
-            //考虑有一个数组为空的情况
-            return oneArrayMedian(nums1);
-        }
-        //数组合并
-        List<Integer> collect = Arrays.stream(nums1).boxed().collect(Collectors.toList());
-        collect.addAll(Arrays.stream(nums2).boxed().collect(Collectors.toList()));
-        //排序并取中位数
-        return oneArrayMedian(collect.stream().sorted().mapToInt(Integer::intValue).toArray());
+        return  oneArrayMedian(c.array);
     }
-
 
     private double oneArrayMedian(int[] array){
         if( array.length%2 == 0 ){
@@ -58,9 +48,35 @@ public class Solution {
     }
 
 
-    public static void main(String[] args) {
-        double d = (2+3)/2D;
-        System.out.println(d);
-    }
-
 }
+
+class SeqList {
+    public int[] array;
+    public int last;
+    public SeqList(int[] array) {
+        this.array=array;
+        if(array!=null) {//判断是否为空
+            last=array.length;
+        }
+    }
+}
+class Combine {
+    public void Combine(SeqList A,SeqList B,SeqList C) {
+        int a=0,b=0,c=0;
+        while(a<A.last&&b<B.last) {
+            if(A.array[a]<B.array[b]) {
+                C.array[c++]=A.array[a++];
+            }else {
+                C.array[c++]=B.array[b++];
+            }
+        }
+        while(a<A.last) {
+            C.array[c++]=A.array[a++];
+        }
+        while(b<B.last) {
+            C.array[c++]=B.array[b++];
+        }
+        C.last=c;
+    }
+}
+
